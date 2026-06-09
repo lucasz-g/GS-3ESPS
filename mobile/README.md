@@ -53,6 +53,7 @@ O objetivo do app é permitir que usuários façam login, cadastrem locais de in
 - React Navigation
 - Axios
 - AsyncStorage
+- Context API para alternância de tema
 
 ---
 
@@ -69,6 +70,7 @@ O objetivo do app é permitir que usuários façam login, cadastrem locais de in
 
 - Exibição do relatório de risco mais recente
 - Atalhos para locais monitorados e histórico
+- Botão no cabeçalho para alternar entre tema claro e tema escuro
 
 ### Gestão de Locais
 
@@ -88,6 +90,13 @@ O objetivo do app é permitir que usuários façam login, cadastrem locais de in
 - Cache local do relatório mais recente por local usando AsyncStorage
 - Dados mockados quando o backend não está configurado ou não está executando
 - O mock cobre login, cadastro, locais, criação de local, histórico e detalhe de risco
+
+### Tema
+
+- Tema claro
+- Tema escuro
+- Alternância manual pelo botão de tema
+- Aplicação das cores nas telas, cards, inputs e cabeçalho de navegação
 
 ---
 
@@ -120,6 +129,8 @@ mobile/
     ├── services/
     │   ├── api.ts
     │   └── mockApi.ts
+    ├── theme/
+    │   └── ThemeContext.tsx
     └── storage/
         └── reportStorage.ts
 ```
@@ -193,12 +204,6 @@ npm run android
 npm run ios
 ```
 
-### Executar no navegador
-
-```bash
-npm run web
-```
-
 ---
 
 ## Validação Técnica
@@ -222,6 +227,8 @@ Login
         │     └── Detalhe do Local
         └── Histórico de Relatórios
 ```
+
+O botão de tema fica disponível na tela de login e no cabeçalho das demais telas.
 
 ---
 

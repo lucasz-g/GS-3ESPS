@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
@@ -7,6 +8,7 @@ import LocationsScreen from '../screens/LocationsScreen';
 import LocationDetailScreen from '../screens/LocationDetailScreen';
 import AddLocationScreen from '../screens/AddLocationScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import { useTheme } from '../theme/ThemeContext';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -26,8 +28,23 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
  * cabeçalho ou adicione novas telas conforme necessário.
  */
 export default function AppNavigator() {
+  const { colors, isDark, toggleTheme } = useTheme();
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.background },
+        headerTintColor: colors.text,
+        contentStyle: { backgroundColor: colors.background },
+        headerRight: () => (
+          <Button
+            title={isDark ? 'Claro' : 'Escuro'}
+            onPress={toggleTheme}
+            color={colors.primary}
+          />
+        ),
+      }}
+    >
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Register" component={RegisterScreen} options={{ title: 'Registrar' }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Dashboard' }} />

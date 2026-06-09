@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;
 
@@ -16,6 +17,7 @@ export default function RegisterScreen({ navigation }: Props) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { colors } = useTheme();
 
   const handleRegister = async () => {
     try {
@@ -29,31 +31,43 @@ export default function RegisterScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Cadastro</Text>
       <TextInput
         placeholder="Nome"
+        placeholderTextColor={colors.placeholder}
         value={name}
         onChangeText={setName}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
       <TextInput
         placeholder="Email"
+        placeholderTextColor={colors.placeholder}
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
         autoCapitalize="none"
         keyboardType="email-address"
       />
       <TextInput
         placeholder="Senha"
+        placeholderTextColor={colors.placeholder}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
-      <Button title="Registrar" onPress={handleRegister} />
-      <Button title="Voltar ao Login" onPress={() => navigation.goBack()} />
+      <Button title="Registrar" onPress={handleRegister} color={colors.primary} />
+      <Button title="Voltar ao Login" onPress={() => navigation.goBack()} color={colors.primary} />
     </View>
   );
 }

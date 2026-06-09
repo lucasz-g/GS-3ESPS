@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -13,6 +14,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
  */
 export default function HomeScreen({ navigation }: Props) {
   const [latest, setLatest] = useState<any | null>(null);
+  const { colors } = useTheme();
 
   useEffect(() => {
     const fetchLatest = async () => {
@@ -29,22 +31,22 @@ export default function HomeScreen({ navigation }: Props) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Dashboard</Text>
       {latest ? (
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{latest.locationName}</Text>
-          <Text>Temperatura: {latest.temperature}°C</Text>
-          <Text>Vento: {latest.windSpeed} km/h</Text>
-          <Text>Chuva: {latest.rainProbability}%</Text>
-          <Text>Risco: {latest.riskLevel}</Text>
-          <Text>Recomendação: {latest.recommendation}</Text>
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[styles.cardTitle, { color: colors.text }]}>{latest.locationName}</Text>
+          <Text style={{ color: colors.text }}>Temperatura: {latest.temperature}°C</Text>
+          <Text style={{ color: colors.text }}>Vento: {latest.windSpeed} km/h</Text>
+          <Text style={{ color: colors.text }}>Chuva: {latest.rainProbability}%</Text>
+          <Text style={{ color: colors.text }}>Risco: {latest.riskLevel}</Text>
+          <Text style={{ color: colors.text }}>Recomendação: {latest.recommendation}</Text>
         </View>
       ) : (
-        <Text>Nenhum relatório disponível.</Text>
+        <Text style={{ color: colors.text }}>Nenhum relatório disponível.</Text>
       )}
-      <Button title="Locais" onPress={() => navigation.navigate('Locations')} />
-      <Button title="Histórico" onPress={() => navigation.navigate('History')} />
+      <Button title="Locais" onPress={() => navigation.navigate('Locations')} color={colors.primary} />
+      <Button title="Histórico" onPress={() => navigation.navigate('History')} color={colors.primary} />
     </View>
   );
 }

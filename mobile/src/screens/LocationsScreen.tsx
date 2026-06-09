@@ -4,6 +4,7 @@ import { View, Text, FlatList, TouchableOpacity, Button, StyleSheet } from 'reac
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Locations'>;
 
@@ -14,6 +15,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Locations'>;
  */
 export default function LocationsScreen({ navigation }: Props) {
   const [locations, setLocations] = useState<any[]>([]);
+  const { colors } = useTheme();
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -43,22 +45,26 @@ export default function LocationsScreen({ navigation }: Props) {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Locais Monitorados</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Locais Monitorados</Text>
       <FlatList
         data={locations}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigation.navigate('LocationDetail', { id: item.id })}>
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>{item.name}</Text>
-              <Text>{item.city}, {item.state}</Text>
+            <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+              <Text style={[styles.cardTitle, { color: colors.text }]}>{item.name}</Text>
+              <Text style={{ color: colors.text }}>{item.city}, {item.state}</Text>
             </View>
           </TouchableOpacity>
         )}
-        ListEmptyComponent={<Text>Nenhum local cadastrado.</Text>}
+        ListEmptyComponent={<Text style={{ color: colors.text }}>Nenhum local cadastrado.</Text>}
       />
-      <Button title="Adicionar Local" onPress={() => navigation.navigate('AddLocation')} />
+      <Button
+        title="Adicionar Local"
+        onPress={() => navigation.navigate('AddLocation')}
+        color={colors.primary}
+      />
     </View>
   );
 }

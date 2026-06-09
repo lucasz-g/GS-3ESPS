@@ -4,6 +4,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
 import { saveReport, getReport } from '../storage/reportStorage';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'LocationDetail'>;
 
@@ -15,6 +16,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'LocationDetail'>;
 export default function LocationDetailScreen({ route }: Props) {
   const { id } = route.params;
   const [report, setReport] = useState<any | null>(null);
+  const { colors } = useTheme();
 
   useEffect(() => {
     const fetchReport = async () => {
@@ -36,21 +38,21 @@ export default function LocationDetailScreen({ route }: Props) {
 
   if (!report) {
     return (
-      <View style={styles.container}>
-        <Text>Carregando...</Text>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Text style={{ color: colors.text }}>Carregando...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{report.locationName}</Text>
-      <Text>Temperatura: {report.temperature}°C</Text>
-      <Text>Vento: {report.windSpeed} km/h</Text>
-      <Text>Chuva: {report.rainProbability}%</Text>
-      <Text>Condição: {report.weatherCondition}</Text>
-      <Text>Nível de risco: {report.riskLevel}</Text>
-      <Text>Recomendação: {report.recommendation}</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>{report.locationName}</Text>
+      <Text style={{ color: colors.text }}>Temperatura: {report.temperature}°C</Text>
+      <Text style={{ color: colors.text }}>Vento: {report.windSpeed} km/h</Text>
+      <Text style={{ color: colors.text }}>Chuva: {report.rainProbability}%</Text>
+      <Text style={{ color: colors.text }}>Condição: {report.weatherCondition}</Text>
+      <Text style={{ color: colors.text }}>Nível de risco: {report.riskLevel}</Text>
+      <Text style={{ color: colors.text }}>Recomendação: {report.recommendation}</Text>
     </View>
   );
 }

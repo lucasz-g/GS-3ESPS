@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'AddLocation'>;
 
@@ -18,6 +19,7 @@ export default function AddLocationScreen({ navigation }: Props) {
   const [state, setState] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const { colors } = useTheme();
 
   const handleSave = async () => {
     const latNum = parseFloat(latitude);
@@ -43,41 +45,61 @@ export default function AddLocationScreen({ navigation }: Props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Novo Local</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Novo Local</Text>
       <TextInput
         placeholder="Nome"
+        placeholderTextColor={colors.placeholder}
         value={name}
         onChangeText={setName}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
       <TextInput
         placeholder="Cidade"
+        placeholderTextColor={colors.placeholder}
         value={city}
         onChangeText={setCity}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
       <TextInput
         placeholder="Estado"
+        placeholderTextColor={colors.placeholder}
         value={state}
         onChangeText={setState}
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
       <TextInput
         placeholder="Latitude"
+        placeholderTextColor={colors.placeholder}
         value={latitude}
         onChangeText={setLatitude}
         keyboardType="numeric"
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
       <TextInput
         placeholder="Longitude"
+        placeholderTextColor={colors.placeholder}
         value={longitude}
         onChangeText={setLongitude}
         keyboardType="numeric"
-        style={styles.input}
+        style={[
+          styles.input,
+          { backgroundColor: colors.input, borderColor: colors.border, color: colors.text },
+        ]}
       />
-      <Button title="Salvar" onPress={handleSave} />
+      <Button title="Salvar" onPress={handleSave} color={colors.primary} />
     </View>
   );
 }

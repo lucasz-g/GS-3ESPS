@@ -50,6 +50,7 @@ Aplicativo mobile responsável por:
 * Visualização de relatórios de risco
 * Histórico de consultas
 * Cache local para uso offline
+* Alternância entre tema claro e tema escuro
 
 Documentação completa disponível em:
 
@@ -79,6 +80,7 @@ mobile/README.md
 * React Navigation
 * Axios
 * AsyncStorage
+* Tema claro/escuro com Context API
 
 ---
 
@@ -102,7 +104,7 @@ backend/README.md
 
 ```bash
 cd mobile
-```
+``` 
 
 Consultar:
 

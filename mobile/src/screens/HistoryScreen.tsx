@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import api from '../services/api';
+import { useTheme } from '../theme/ThemeContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'History'>;
 
@@ -13,6 +14,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'History'>;
  */
 export default function HistoryScreen({}: Props) {
   const [history, setHistory] = useState<any[]>([]);
+  const { colors } = useTheme();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -27,19 +29,19 @@ export default function HistoryScreen({}: Props) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Histórico de Relatórios</Text>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text }]}>Histórico de Relatórios</Text>
       <FlatList
         data={history}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>{item.locationName}</Text>
-            <Text>Risco: {item.riskLevel}</Text>
-            <Text>Data: {new Date(item.createdAt).toLocaleString()}</Text>
+          <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
+            <Text style={[styles.cardTitle, { color: colors.text }]}>{item.locationName}</Text>
+            <Text style={{ color: colors.text }}>Risco: {item.riskLevel}</Text>
+            <Text style={{ color: colors.text }}>Data: {new Date(item.createdAt).toLocaleString()}</Text>
           </View>
         )}
-        ListEmptyComponent={<Text>Nenhum relatório encontrado.</Text>}
+        ListEmptyComponent={<Text style={{ color: colors.text }}>Nenhum relatório encontrado.</Text>}
       />
     </View>
   );
